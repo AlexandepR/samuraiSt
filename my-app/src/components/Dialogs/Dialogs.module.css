@@ -1,0 +1,37 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    /*text-decoration: none;*/
+}
+
+
+.dialogsItems {
+    padding: 10px;
+    color: white
+
+}
+.img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    box-shadow: 0px 20px 40px rgba(0,0,0,0.3);
+}
+.messages {
+    margin-top: 9px
+    /*padding: 5px;*/
+    /*background-color: teal;*/
+}
+
+.messages .message {
+    grid-template-columns: 2fr 10fr;
+    /*padding: 40px;*/
+    /*background-color: teal;*/
+    color: white;
+}
+
+.dialogsItems .active {
+
+    color: gold;
+}
+
+
