@@ -32,20 +32,32 @@ export type InitialStateType = {
 
 export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionsType): InitialStateType => {
     switch (action.type) {
-        case 'ADD-POST':
+        case 'ADD-POST': {
             const newPost: MyPostsType = {
                 id: new Date().getTime(),
                 message: state.newPostText,
                 likesCount: 0
-            }
-            return {
-                ...state,
-                posts: [...state.posts, newPost],
-                newPostText: ''
-            }
-        case 'CHANGE-NEW-TEXT':
-            state.newPostText = action.newText;
-            return state;
+            };
+            let stateCopy = {...state};
+            stateCopy.posts = [...state.posts];
+            stateCopy.posts.push(newPost);
+            stateCopy.newPostText = '';
+            return stateCopy;
+        }
+        // return {
+        //     ...state,
+        //     posts: [...state.posts, newPost],
+        //     newPostText: ''
+        // }
+        case 'CHANGE-NEW-TEXT': {
+            let stateCopy = {...state}
+            stateCopy.newPostText = action.newText
+            return stateCopy
+            //     state.newPostText = action.newText;
+            //     return state;
+            // default:
+            //     return state;
+        }
         default:
             return state;
     }

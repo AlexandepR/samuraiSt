@@ -31,7 +31,7 @@ import {AppStateType} from "../../../redux/redux-store";
 //     )
 // }
 
-const mapSateToProps = (state: AppStateType) => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         posts: state.profilePostPage.posts,
         newPostText: state.profilePostPage.newPostText,
@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch: any) => {
 }
 
 
-const MyPostsContainer = connect(mapSateToProps, mapDispatchToProps)(MyPosts)
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
 
 
 export default MyPostsContainer;
