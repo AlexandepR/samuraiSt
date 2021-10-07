@@ -1,16 +1,4 @@
-// export const  addNewMessageBodyActionCreator = (newTextMessage: string) => {
-//     return {
-//         type: 'CHANGE-NEW-MESSAGE-TEXT',
-//         newTextMessage: newTextMessage
-//     } as const
-// }
 
-// export const sendMessageActionCreator = (newText:string) => {
-//     return {
-//         type: 'SEND-MESSAGE',
-//         newText: newText
-//     } as const
-// }
 
 import {DialogsType, MessagesType, MyPostsType} from "./store";
 

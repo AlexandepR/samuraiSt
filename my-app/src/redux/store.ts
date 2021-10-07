@@ -45,7 +45,7 @@ export type StoreType = {
 }
 
 
-export type ActionsTypes =
+export type ActionsType =
     ReturnType<typeof addPostActionCreator> |
     ReturnType<typeof changeNewTextActionCreator> |
     ReturnType<typeof updateNewMessageBodyActionCreator> |

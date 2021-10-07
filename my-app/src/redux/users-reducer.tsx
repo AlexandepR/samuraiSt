@@ -1,23 +1,39 @@
-import { MyPostsType} from "./store";
+import {ActionsType, MyPostsType} from "./store";
+import {sendMessageActionCreator} from "./dialogs-reducer";
 
+export type UserType = {
+    userId: number
+    photoUrl: string
+    followed: boolean
+    fullName: string
+    status: string
+    location: UserLocation
+}
 
-let initialState = {
-    users: [
-        {id: 1, followed: false, fullName: 'Alex', status: 'I am a boss', location: {city:'Minsk',country:'Belarus'}},
-        {id: 2, followed: true, fullName: 'Lily', status: 'I am a boss', location: {city:'Moscow',country:'Russia'}},
-        {id: 3, followed: false, fullName: 'Ilya', status: 'I am a boss', location: {city:'Kiev',country:'Ukraine'}},
-    ],
-    newPostText: ''
+export type UserLocation = {
+    city: string
+    country: string
+}
+
+let initialState: InitialStateType = {
+    users: []
+}
+
+export type InitialStateType = {
+    users: Array<UserType>
 }
 
 
- const usersReducer = (state: any , action: any)=> {
+
+type userReducerAC = ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC>
+
+const usersReducer = (state: InitialStateType = initialState , action: userReducerAC): InitialStateType=> {
     switch (action.type) {
         case 'FOLLOW':
             return {
                 ...state,
                 users: state.users.map(u => {
-                    if (u.id === action.userId) {
+                    if (u.userId === action.userId) {
                         return {...u, followed: true}
                     }
                     return u
@@ -28,7 +44,7 @@ let initialState = {
                 ...state,
                 // users: [...state.users],
                 users: state.users.map(u => {
-                    if (u.id === action.userId) {
+                    if (u.userId === action.userId) {
                         return {...u, followed: false}
                     }
                     return u
@@ -41,10 +57,8 @@ let initialState = {
     }
 }
 
-export const followAC = (userId) => ({type: 'FOLLOW', userId})
-
-export const unfollowAC = (userId) => ({type: 'UNFOLLOW',userId})
-
-export const setUsersAC = (users) => ({type: 'SET-USERS', users })
+export const followAC = (userId: number) => ({type: 'FOLLOW', userId} as const)
+export const unfollowAC = (userId: number) => ({type: 'UNFOLLOW',userId} as const)
+export const setUsersAC = (users: Array<UserType>) => ({type: 'SET-USERS', users } as const)
 
 export default usersReducer
