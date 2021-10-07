@@ -9,21 +9,14 @@ import News from "./components/News/News";
 import Music from './components/Music/Music'
 import {store, StoreType} from "./redux/store";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import Users from "./components/Users/users";
 
 
 
 
 
-// type AppPropsType = {
-//     store: StoreType
-//
-// }
 
-// const App: React.FC <AppPropsType> = (props) => {
-// const state = props.store.getState()
 const App: React.FC= () => {
-    // const state = store.getState()
-
     return (
         <BrowserRouter>
             <div className='App'>
@@ -31,14 +24,11 @@ const App: React.FC= () => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs'
-                           render ={ () => <DialogsContainer
-                               // dialogsPage={ state.dialogsPage }
-                               // store={store}
-                           /> } />
+                           render ={ () => <DialogsContainer/> } />
                     <Route path='/profile'
-                           render={ () => <Profile
-                               // store={store}
-                           /> } />
+                           render={ () => <Profile/> } />
+                    <Route path='/users'
+                           render={ () => <Users/> } />
 
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>

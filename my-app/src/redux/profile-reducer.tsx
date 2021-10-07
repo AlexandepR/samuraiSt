@@ -1,4 +1,4 @@
-import {DialogsTextType, MyPostsTextType, MyPostsType, RootStateType, SidebarType} from "./store";
+import { MyPostsType} from "./store";
 
 
 let initialState: InitialStateType = {
@@ -11,19 +11,6 @@ let initialState: InitialStateType = {
     newPostText: ''
 }
 
-
-// export const addPostActionCreator = (newPostText:string) => {
-//     return {
-//         type: 'ADD-POST',
-//         postText: newPostText
-//     } as const
-// }
-// export const changeNewTextActionCreator = (newText:string) => {
-//     return {
-//         type: 'CHANGE-NEW-TEXT',
-//         newText: newText
-//     } as const
-// }
 
 export type InitialStateType = {
     posts: Array<MyPostsType>
@@ -38,32 +25,24 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
                 message: state.newPostText,
                 likesCount: 0
             };
-            let stateCopy = {...state};
-            stateCopy.posts = [...state.posts];
-            stateCopy.posts.push(newPost);
-            stateCopy.newPostText = '';
-            return stateCopy;
-        }
-        // return {
-        //     ...state,
-        //     posts: [...state.posts, newPost],
-        //     newPostText: ''
-        // }
-        case 'CHANGE-NEW-TEXT': {
-            let stateCopy = {...state}
-            stateCopy.newPostText = action.newText
+            let stateCopy = {
+                ...state,
+                posts: [...state.posts,newPost],
+                newPostText: ''
+            };
             return stateCopy
-            //     state.newPostText = action.newText;
-            //     return state;
-            // default:
-            //     return state;
+        }
+
+        case 'CHANGE-NEW-TEXT': {
+            return {
+                ...state,
+                newPostText: action.newText
+            }
         }
         default:
             return state;
     }
 }
-const ADD_POST = 'ADD-POST'
-const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT'
 
 export const addPostActionCreator = () => {
     return {
