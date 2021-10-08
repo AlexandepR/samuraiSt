@@ -5,9 +5,13 @@ export type UserType = {
     userId: number
     photoUrl: string
     followed: boolean
-    fullName: string
+    name: string
     status: string
-    location: UserLocation
+    location: UserLocation,
+    photos: {
+        small: string | null,
+        large: string | null
+    }
 }
 
 export type UserLocation = {
@@ -15,7 +19,7 @@ export type UserLocation = {
     country: string
 }
 
-let initialState: InitialStateType = {
+const initialState: InitialStateType = {
     users: []
 }
 

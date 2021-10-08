@@ -9,7 +9,7 @@ import {Dispatch} from "redux";
 type OwnProps = {}
 
 type MapStateToPropsType = {
-    usersPage: Array<UserType>
+    usersPage: InitialStateType
 }
 
 type mapDispatchToProps = {
@@ -21,7 +21,7 @@ export type UsersPropsType = MapStateToPropsType & mapDispatchToProps & OwnProps
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        usersPage: state.usersPage.users
+        usersPage: state.users
     }
 }
 let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToProps => {
