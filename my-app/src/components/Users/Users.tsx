@@ -13,7 +13,8 @@ type GetUsersType = {
 
 export function Users (props: UsersPropsType ) {
     if (props.usersPage.users.length === 0) {
-        axios.get<GetUsersType>('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+        axios.get<GetUsersType>('https://social-network.samuraijs.com/api/1.0/users')
+            .then(response => {
             props.setUsers(response.data.items)
         })
 
