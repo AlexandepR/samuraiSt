@@ -8,7 +8,7 @@ import {ProfileType, setUserProfile} from "../../../redux/profile-reducer";
 
 
 type PathParamsType = {
-    userId: string
+    userId: any
 }
 
 type MapStatePropsType = {
@@ -18,7 +18,6 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
     setUserProfile: (profile: any) => void
-
 }
 
 type OwnPropsType = MapStatePropsType & MapDispatchPropsType
@@ -28,16 +27,20 @@ function ProfileContainer (props: PropsType) {
 debugger
     useEffect(() => {
         let userId = props.match.params.userId
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
+        if (!userId) {
+            userId = 2;
+        }
+            axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
             .then(response => {
                 props.setUserProfile(response.data)
-            });
+            })
     },[])
 
         return (
                 <Profile profile={props.profile} />
         )
 }
+
 
 let WithUrlDataContainerComponent = withRouter(ProfileContainer)
 
