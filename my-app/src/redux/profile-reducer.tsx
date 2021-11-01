@@ -1,4 +1,4 @@
-import { MyPostsType} from "./store";
+import {MyPostsType} from "./store";
 
 
 let initialState: InitialStateType = {
@@ -8,13 +8,19 @@ let initialState: InitialStateType = {
         {id: 3, message: 'Blabla', likesCount: 11},
         {id: 4, message: 'Dada', likesCount: 11}
     ],
-    newPostText: ''
+    newPostText: '',
+    profile: null
 }
 
 
 export type InitialStateType = {
     posts: Array<MyPostsType>
     newPostText: string
+    profile: any
+}
+
+export type ProfileType = {
+    profile: any
 }
 
 export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionsType): InitialStateType => {
@@ -27,7 +33,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
             };
             let stateCopy = {
                 ...state,
-                posts: [...state.posts,newPost],
+                posts: [...state.posts, newPost],
                 newPostText: ''
             };
             return stateCopy
@@ -37,6 +43,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
             return {
                 ...state,
                 newPostText: action.newText
+            }
+        }
+        case 'SET-USER-PROFILE': {
+            return {
+                ...state,
+                profile: action.profile
             }
         }
         default:
@@ -56,7 +68,9 @@ export const changeNewTextActionCreator = (newText: string) => {
         newText: newText
     } as const
 }
+export const setUserProfile = (profile: null) => ({type: 'SET-USER-PROFILE', profile} as const)
 
 type ChangeNewTextActionType = ReturnType<typeof changeNewTextActionCreator>
 type AddPostActionType = ReturnType<typeof addPostActionCreator>
-type ProfileActionsType = ChangeNewTextActionType | AddPostActionType
+type setUserProfileType = ReturnType<typeof setUserProfile>
+export type ProfileActionsType = ChangeNewTextActionType | AddPostActionType | setUserProfileType

@@ -1,21 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Users from './Users';
-// import Users from "./UsersAPIComponent";
 import {
-    followAC,
-    setCurrentPageAC,
-    setUsersAC,
-    setUsersTotalCountAC, toggleIsFethingAC,
-    unfollowAC,
+    follow,
+    setCurrentPage,
+    setUsers,
+    setTotalUsersCount, toggleIsFething,
+    unfollow,
     UserType
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {InitialStateType} from "../../redux/users-reducer";
-import {Dispatch} from "redux";
-// import UsersAPIComponent from "./UsersAPIComponent";
 import axios from 'axios';
-import loader from '../../assets/images/loader.gif'
 import Preloader from "../common/Preloader/Preloader";
 
 
@@ -35,7 +31,7 @@ type mapDispatchToProps = {
     setUsers: (users: Array<UserType>) => void
     setCurrentPage: (pageNumber: number) => void
     setTotalUsersCount: (totalCount: number) => void
-    toggleIsFetching: (isFetching: boolean) => void
+    toggleIsFething: (isFetching: boolean) => void
 }
 
 type GetUsersType = {
@@ -51,10 +47,10 @@ export type UsersPropsType = MapStateToPropsType & mapDispatchToProps & OwnProps
 class UsersContainer extends React.Component<any, any> {
 
     componentDidMount() {
-        this.props.toggleIsFetching(true);
+        this.props.toggleIsFething(true);
         axios.get<GetUsersType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
-                this.props.toggleIsFetching(false)
+                this.props.toggleIsFething(false)
                 this.props.setUsers(response.data.items)
                 this.props.setTotalUsersCount(response.data.totalCount)
             });
@@ -62,17 +58,17 @@ class UsersContainer extends React.Component<any, any> {
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber);
-        this.props.toggleIsFetching(true)
+        this.props.toggleIsFething(true)
         axios.get<GetUsersType>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
             .then(response => {
-                this.props.toggleIsFetching(false)
+                this.props.toggleIsFething(false)
                 this.props.setUsers(response.data.items)
             });
     }
 
     render() {
         return <>
-            {this.props.isFetching ? <Preloader /> : null}
+            {this.props.isFetching ? <Preloader/> : null}
             <Users totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
@@ -108,10 +104,8 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 export const UsersContainerAll =
     connect<MapStateToPropsType, mapDispatchToProps, OwnProps, AppStateType>(mapStateToProps,
-        {follow: followAC,
-    unfollow: unfollowAC,
-    setUsers: setUsersAC,
-    setCurrentPage: setCurrentPageAC,
-    setTotalUsersCount: setUsersTotalCountAC,
-    toggleIsFetching: toggleIsFethingAC}
-)(UsersContainer)
+        {
+            follow, unfollow, setUsers, setCurrentPage,
+            setTotalUsersCount, toggleIsFething
+        }
+    )(UsersContainer)
