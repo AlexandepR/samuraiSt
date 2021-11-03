@@ -10,6 +10,7 @@ import Music from './components/Music/Music'
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {UsersContainerAll} from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileInfo/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 
 
@@ -21,7 +22,7 @@ const App: React.FC= () => {
     return (
         <BrowserRouter>
             <div className='App'>
-                <Header/>
+                <HeaderContainer />
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs'

@@ -24,7 +24,6 @@ type OwnPropsType = MapStatePropsType & MapDispatchPropsType
 type PropsType = RouteComponentProps<PathParamsType> & OwnPropsType
 
 function ProfileContainer (props: PropsType) {
-debugger
     useEffect(() => {
         let userId = props.match.params.userId
         if (!userId) {
