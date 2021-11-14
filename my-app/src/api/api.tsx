@@ -9,7 +9,10 @@ type GetUsersType = {
 type deleteType = any
 type PostType = any
 
-
+type AuthMeType = {
+    resultCode: number
+    data: any
+}
 
 const instance = axios.create ( {
     withCredentials: true,
@@ -27,12 +30,24 @@ export const usersAPI = {
             });
     },
     follow(userId:number) {
-       return instance.post<PostType>(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`,)
+       return instance.post<PostType>(`follow/${userId}`,)
     },
     unfollow(userId: number) {
-      return  instance.delete<deleteType>(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`,)
+      return  instance.delete<deleteType>(`follow/${userId}`,)
+    },
+    getProfile(userId: number) {
+        return instance.get(`profile/` + userId)}
+}
+
+export const authAPI = {
+    me() {
+        return instance.get<AuthMeType>(`auth/me`, {
+            withCredentials: true
+        })
     }
 }
+
+
 
 
 export const getUsers2 = (currentPage: number = 1, pageSize: number = 10) => {

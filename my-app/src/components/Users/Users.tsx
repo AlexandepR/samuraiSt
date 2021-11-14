@@ -15,7 +15,7 @@ type usersType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     followingInProgress: Array<number>
-    toggleFollowingProgress: (isFetching: boolean, id: number) => void
+    // toggleFollowingProgress: (isFetching: boolean, id: number) => void
 }
 type deleteType = any
 type PostType = any
@@ -55,22 +55,12 @@ let Users = (props: usersType) => {
                     <div>
                         {u.followed
                             ? <button disabled={props.followingInProgress.some
-                            (id => id === u.id)} onClick={() => {
-                                props.toggleFollowingProgress(true, u.id)
-                            }}>Unfollow</button>
+                            (id => id === u.id)} onClick={() => {props.unfollow(u.id)}}>
+                                Unfollow</button>
 
                             : <button disabled={props.followingInProgress.some
-                            (id => id === u.id)} onClick={() => {
-                                props.toggleFollowingProgress(true, u.id)
-                                usersAPI.follow(u.id)
-                                    .then(response => {
-                                        if (response.data.resultCode == 0) {
-                                            props.follow(u.id)
-                                        }
-                                        props.toggleFollowingProgress(false, u.id)
-                                    });
-
-                            }}>Follow</button>}
+                            (id => id === u.id)} onClick={() => {props.follow(u.id)}}>
+                            Follow</button>}
                     </div>
                 </span>
                     <span>
