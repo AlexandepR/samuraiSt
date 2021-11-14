@@ -44,7 +44,7 @@ let Users = (props: usersType) => {
             </div>
             {/*<button onClick={this.getUsers} >Get Users</button>*/}
             {
-                props.users.map((u: any) => <div key={u.id}>
+                props.users.map((u: UserType) => <div key={u.id}>
                 <span>
                     <div>
                         <NavLink to={'profile/' + u.id}>
