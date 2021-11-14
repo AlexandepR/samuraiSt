@@ -1,5 +1,6 @@
 import {ActionsType, MyPostsType} from "./store";
 import {sendMessageActionCreator} from "./dialogs-reducer";
+import {usersAPI} from "../api/api";
 
 export type UserType = {
     id: number
@@ -38,7 +39,6 @@ const initialState: InitialStateType = {
 }
 
 
-
 type userReducerAC = ReturnType<typeof follow> |
     ReturnType<typeof unfollow> |
     ReturnType<typeof setUsers> |
@@ -47,7 +47,7 @@ type userReducerAC = ReturnType<typeof follow> |
     ReturnType<typeof toggleIsFething> |
     ReturnType<typeof toggleFollowingProgress>
 
-const usersReducer = (state: InitialStateType = initialState , action: userReducerAC): InitialStateType=> {
+const usersReducer = (state: InitialStateType = initialState, action: userReducerAC): InitialStateType => {
     switch (action.type) {
         case 'FOLLOW':
             return {
@@ -72,7 +72,7 @@ const usersReducer = (state: InitialStateType = initialState , action: userReduc
             }
 
         case 'SET-USERS':
-            return { ...state, users: action.users}
+            return {...state, users: action.users}
 
         case 'SET-CURRENT-PAGE':
             return {
@@ -103,10 +103,31 @@ const usersReducer = (state: InitialStateType = initialState , action: userReduc
 }
 
 export const follow = (id: number) => ({type: 'FOLLOW', id} as const)
-export const unfollow = (id: number) => ({type: 'UNFOLLOW',id} as const)
-export const setUsers = (users: Array<UserType>) => ({type: 'SET-USERS', users } as const)
-export const setCurrentPage = (currentPage: number) => ({type:'SET-CURRENT-PAGE', currentPage} as const)
-export const setTotalUsersCount = (totalUsersCount: number) => ({type:'SET-TOTAL-USERS-COUNT', totalUsersCount} as const)
-export const toggleIsFething = (isFetching: boolean) => ({type:'TOGGLE-IS-FETCHING', isFetching} as const)
-export const toggleFollowingProgress = (isFetching: boolean, id: number) => ({type: 'TOGGLE-IS-FOLLOWING-PROGRESS', isFetching, id} as const)
+export const unfollow = (id: number) => ({type: 'UNFOLLOW', id} as const)
+export const setUsers = (users: Array<UserType>) => ({type: 'SET-USERS', users} as const)
+export const setCurrentPage = (currentPage: number) => ({type: 'SET-CURRENT-PAGE', currentPage} as const)
+export const setTotalUsersCount = (totalUsersCount: number) => ({
+    type: 'SET-TOTAL-USERS-COUNT',
+    totalUsersCount
+} as const)
+export const toggleIsFething = (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING', isFetching} as const)
+export const toggleFollowingProgress = (isFetching: boolean, id: number) => ({
+    type: 'TOGGLE-IS-FOLLOWING-PROGRESS',
+    isFetching,
+    id
+} as const)
+
+export const getUsersThunkCreator = () => {
+    return (dispatch) => {
+        dispatch(toggleIsFething(true));
+
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
+            dispatch(toggleIsFething(false))
+            dispatch(setUsers(data.items))
+            dispatch(setTotalUsersCount(data.totalCount))
+        });
+    }
+}
+
+
 export default usersReducer
