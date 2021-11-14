@@ -2,12 +2,14 @@ import axios from "axios";
 import {UserType} from "../redux/users-reducer";
 
 type GetUsersType = {
-    // error: string | null,
     items: UserType[],
     totalCount: number,
-    // setCurrentPage: (value: number) => void
-    // onPageChanged: (value: number) => void
+    userId: number
 }
+type deleteType = any
+type PostType = any
+
+
 
 const instance = axios.create ( {
     withCredentials: true,
@@ -23,7 +25,14 @@ export const usersAPI = {
             .then(response => {
                 return response.data;
             });
-    }}
+    },
+    follow(userId:number) {
+       return instance.post<PostType>(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`,)
+    },
+    unfollow(userId: number) {
+      return  instance.delete<deleteType>(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`,)
+    }
+}
 
 
 export const getUsers2 = (currentPage: number = 1, pageSize: number = 10) => {

@@ -4,16 +4,13 @@ import Users from './Users';
 import {
     follow,
     setCurrentPage,
-    setUsers,
-    setTotalUsersCount, toggleIsFething,
     unfollow,
-    UserType, toggleFollowingProgress, getUsersThunkCreator, getUsers
+    UserType, toggleFollowingProgress, getUsers
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {InitialStateType} from "../../redux/users-reducer";
-import axios from 'axios';
 import Preloader from "../common/Preloader/Preloader";
-import {usersAPI} from "../../api/api";
+
 
 
 type OwnProps = {}
@@ -38,15 +35,14 @@ type mapDispatchToProps = {
     getUsers: (currentPage: number, pageSize: number) => void
 }
 
-type GetUsersType = {
-    error: string | null,
-    items: UserType[],
-    totalCount: number,
-    setCurrentPage: (value: number) => void
-    onPageChanged: (value: number) => void
-}
-
-export type UsersPropsType = MapStateToPropsType & mapDispatchToProps & OwnProps
+// type GetUsersType = {
+//     error: string | null,
+//     items: UserType[],
+//     totalCount: number,
+//     setCurrentPage: (value: number) => void
+//     onPageChanged: (value: number) => void
+// }
+// export type UsersPropsType = MapStateToPropsType & mapDispatchToProps & OwnProps
 
 class UsersContainer extends React.Component<any, any> {
 

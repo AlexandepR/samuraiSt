@@ -39,8 +39,8 @@ const initialState: InitialStateType = {
 }
 
 
-type userReducerAC = ReturnType<typeof follow> |
-    ReturnType<typeof unfollow> |
+type userReducerAC = ReturnType<typeof followSuccess> |
+    ReturnType<typeof unfollowSuccess> |
     ReturnType<typeof setUsers> |
     ReturnType<typeof setCurrentPage> |
     ReturnType<typeof setTotalUsersCount> |
@@ -102,8 +102,8 @@ const usersReducer = (state: InitialStateType = initialState, action: userReduce
     }
 }
 
-export const follow = (id: number) => ({type: 'FOLLOW', id} as const)
-export const unfollow = (id: number) => ({type: 'UNFOLLOW', id} as const)
+export const followSuccess = (id: number) => ({type: 'FOLLOW', id} as const)
+export const unfollowSuccess = (id: number) => ({type: 'UNFOLLOW', id} as const)
 export const setUsers = (users: Array<UserType>) => ({type: 'SET-USERS', users} as const)
 export const setCurrentPage = (currentPage: number) => ({type: 'SET-CURRENT-PAGE', currentPage} as const)
 export const setTotalUsersCount = (totalUsersCount: number) => ({
@@ -129,6 +129,32 @@ export const getUsers = (currentPage: number, pageSize: number) => {
         });
     }
 }
+
+export const follow = (userId: number, pageSize: number) => {
+    return (dispatch: any) => {
+        dispatch(toggleFollowingProgress(true, userId))
+        usersAPI.follow(userId)
+            .then(response => {
+                if (response.data.resultCode == 0) {
+                    followSuccess(userId)
+                }
+                dispatch(toggleFollowingProgress(false, userId))
+            });
+    }
+}
+export const unfollow = (userId: number, pageSize: number) => {
+    return (dispatch: any) => {
+        dispatch(toggleFollowingProgress(true, userId))
+        usersAPI.unfollow(userId)
+            .then(response => {
+                if (response.data.resultCode == 0) {
+                    unfollowSuccess(userId)
+                }
+                dispatch(toggleFollowingProgress(false,userId))
+            });
+    }
+}
+
 
 
 export default usersReducer
