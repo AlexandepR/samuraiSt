@@ -3,6 +3,7 @@ import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from './Message/Message';
 import { DialogsTextType} from "../../redux/store";
+import {Redirect} from 'react-router-dom'
 
 
 
@@ -10,6 +11,7 @@ type DialogsMessageType = {
     updateNewMessageBody: (text: string) => void
     sendMessage: () => void
     dialogsPage: DialogsTextType
+    isAuth: boolean
 }
 
 const Dialogs = (props: DialogsMessageType) => {
@@ -27,6 +29,10 @@ const Dialogs = (props: DialogsMessageType) => {
         const body = e.currentTarget.value
         props.updateNewMessageBody(body)
     }
+
+    if (!props.isAuth === false) return <Redirect to={'/login'}/> // перепроверить знак '/' возможно не нужен
+
+
 
     return (
         <div className={s.dialogs}>

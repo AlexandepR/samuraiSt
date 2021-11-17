@@ -7,6 +7,7 @@ export type RootStateType = {
     profilePostPage: MyPostsTextType
     dialogsPage: DialogsTextType
     sidebar: SidebarType
+    auth: any
 }
 
 export type MyPostsTextType = {
@@ -81,7 +82,8 @@ export const store: StoreType = {
             ],
             newMessageBody: ''
         },
-        sidebar: {}
+        sidebar: {},
+        auth: false
     },
     _rerenderTreeChange() {
         // console.log('state changed')

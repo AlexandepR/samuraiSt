@@ -1,4 +1,5 @@
 import {MyPostsType} from "./store";
+import {usersAPI} from "../api/api";
 
 
 let initialState: InitialStateType = {
@@ -61,7 +62,6 @@ export const addPostActionCreator = () => {
         type: 'ADD-POST'
     } as const
 }
-
 export const changeNewTextActionCreator = (newText: string) => {
     return {
         type: 'CHANGE-NEW-TEXT',
@@ -69,8 +69,15 @@ export const changeNewTextActionCreator = (newText: string) => {
     } as const
 }
 export const setUserProfile = (profile: null) => ({type: 'SET-USER-PROFILE', profile} as const)
+export const getUserProfile = (userId: number) => (dispatch: any) => {
+    usersAPI.getProfile(userId).then(response => {
+        dispatch(setUserProfile(response.data));
+    })
+}
+
 
 type ChangeNewTextActionType = ReturnType<typeof changeNewTextActionCreator>
 type AddPostActionType = ReturnType<typeof addPostActionCreator>
 type setUserProfileType = ReturnType<typeof setUserProfile>
+type getUserProfileType = ReturnType<typeof getUserProfile>
 export type ProfileActionsType = ChangeNewTextActionType | AddPostActionType | setUserProfileType

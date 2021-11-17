@@ -1,30 +1,11 @@
-import { MyPostsType} from "./store";
-import {sendMessageActionCreator} from "./dialogs-reducer";
+import {authAPI} from "../api/api";
 
-export type UserType = {
-    id: number
-    photoUrl: string
-    followed: boolean
-    name: string
-    status: string
-    location: UserLocation,
-    photos: {
-        small: string | null,
-        large: string | null
-    }
-}
-
-export type UserLocation = {
-    city: string
-    country: string
-}
 
 export type InitialStateType = {
     id: number | string | null,
     email: string | null,
     login: string | null,
     isAuth: boolean
-    // isFetching: boolean
 }
 
 const initialState: InitialStateType = {
@@ -32,7 +13,6 @@ const initialState: InitialStateType = {
     email: null,
     login: null,
     isAuth: false
-    // isFetching: true
 }
 
 
@@ -53,5 +33,15 @@ const authReducer = (state: InitialStateType = initialState, action: ActionsType
 
 export const setAuthUserDataAc = (id: number | string | null, email: string | null, login: string | null,) => (
     {type: 'SET-USER-DATA', data: {id, email, login}} as const)
+
+export const getAuthUserData = () => (dispatch:any) => {
+    authAPI.me()
+        .then(response => {
+            if (response.data.resultCode === 0 ) {
+                let {id, email, login} = response.data.data;
+                dispatch(setAuthUserDataAc(id, email, login))
+            }
+        });
+}
 
 export default authReducer
