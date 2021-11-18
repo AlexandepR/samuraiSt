@@ -6,7 +6,7 @@ import Settings from "./components/Settings/Settings";
 import News from "./components/News/News";
 import Music from './components/Music/Music'
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import {UsersContainerAll} from "./components/Users/UsersContainer";
+import UsersContainerAll from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileInfo/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginPage from "./components/Login/login";

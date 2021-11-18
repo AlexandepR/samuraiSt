@@ -8,6 +8,7 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 
 let mapStateToProps = (state: RootStateType) => {
@@ -27,13 +28,22 @@ let mapDispatchToProps = (dispatch: any) => {
     }
 }
 
-let AuthRedirectComponent = withAuthRedirect(Dialogs);
+// compose(
+//     connect(mapStateToProps, mapDispatchToProps),
+//     withAuthRedirect
+// ) (Dialogs)
+//
+// let AuthRedirectComponent = withAuthRedirect(Dialogs);
 
 // let AuthRedirectComponent = (props: any) => {
 //     if (props.isAuth === false) return <Redirect to ={'/login'}/>   //на уроке была классовая компонента, возможно должна быть в другом месте. перепроверить знак '/' возможно не нужен
 //     return <Dialogs {...props}/>
 // }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
+// const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)
+// (AuthRedirectComponent);
 
-export default DialogsContainer;
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect
+) (Dialogs);
