@@ -30,7 +30,7 @@ const Dialogs = (props: DialogsMessageType) => {
         props.updateNewMessageBody(body)
     }
 
-    if (!props.isAuth === false) return <Redirect to={'/login'}/> // перепроверить знак '/' возможно не нужен
+    if (props.isAuth === false) return <Redirect to={'/login'}/> // перепроверить знак '/' возможно не нужен
 
 
 
@@ -55,5 +55,7 @@ const Dialogs = (props: DialogsMessageType) => {
         </div>
     )
 }
+
+
 
 export default Dialogs;
