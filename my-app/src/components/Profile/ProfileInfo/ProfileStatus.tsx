@@ -12,7 +12,8 @@ class ProfileStatus extends React.Component <IRecipeProps, IRecipeState>{
     state = {
         editMode: false
     }
-    activateEditMode () {
+    activateEditMode = () => {
+        debugger
         this.setState( {
             editMode: true
         })
@@ -29,7 +30,7 @@ class ProfileStatus extends React.Component <IRecipeProps, IRecipeState>{
             <div>
                 {!this.state.editMode &&
                 <div>
-                    <span onDoubleClick= { this.activateEditMode.bind(this) } >{this.props.status}</span>
+                    <span onDoubleClick= { this.activateEditMode } >{this.props.status}</span>
                 </div>
                 }
                 {this.state.editMode &&

@@ -33,6 +33,7 @@ let mapStateToPropsForRedirect = (state: RootStateType) => {
 
 type MapDispatchPropsType = {
     getUserProfile: (profile: number) => void
+    getUserStatus: (status: string | number) => void
 }
 
 type OwnPropsType = MapStatePropsType & MapDispatchPropsType
@@ -45,6 +46,7 @@ function ProfileContainer(props: PropsType) {
             userId = 2;
         }
         props.getUserProfile(userId)
+        props.getUserStatus(userId)
     }, [])
 
 
@@ -65,6 +67,7 @@ function ProfileContainer(props: PropsType) {
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profilePostPage.profile,
+    status: state.profilePage.status
 })
 
 export default compose<React.ComponentType>(
