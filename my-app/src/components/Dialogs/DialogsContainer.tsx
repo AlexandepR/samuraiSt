@@ -13,7 +13,6 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 let mapStateToProps = (state: RootStateType) => {
     return {
         dialogsPage: state.dialogsPage,
-        isAuth: state.auth.isAuth
     }
 }
 
@@ -29,12 +28,11 @@ let mapDispatchToProps = (dispatch: any) => {
 }
 
 let AuthRedirectComponent = withAuthRedirect(Dialogs);
-}
+
 // let AuthRedirectComponent = (props: any) => {
 //     if (props.isAuth === false) return <Redirect to ={'/login'}/>   //на уроке была классовая компонента, возможно должна быть в другом месте. перепроверить знак '/' возможно не нужен
 //     return <Dialogs {...props}/>
 // }
-
 
 const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
 

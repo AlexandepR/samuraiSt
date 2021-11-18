@@ -10,6 +10,7 @@ import {
 import {AppStateType} from "../../redux/redux-store";
 import {InitialStateType} from "../../redux/users-reducer";
 import Preloader from "../common/Preloader/Preloader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 
@@ -35,15 +36,6 @@ type mapDispatchToProps = {
     getUsers: (currentPage: number, pageSize: number) => void
 }
 
-// type GetUsersType = {
-//     error: string | null,
-//     items: UserType[],
-//     totalCount: number,
-//     setCurrentPage: (value: number) => void
-//     onPageChanged: (value: number) => void
-// }
-// export type UsersPropsType = MapStateToPropsType & mapDispatchToProps & OwnProps
-
 class UsersContainer extends React.Component<any, any> {
 
     componentDidMount() {
@@ -52,13 +44,6 @@ class UsersContainer extends React.Component<any, any> {
 
     onPageChanged = (pageNumber: number) => {
         this.props.getUsers(pageNumber, this.props.pageSize)
-        // this.props.setCurrentPage(pageNumber);
-        // this.props.toggleIsFething(true)
-        // usersAPI.getUsers( pageNumber, this.props.pageSize)
-        //     .then(data => {
-        //         this.props.toggleIsFething(false)
-        //         this.props.setUsers(data.items)
-        //     });
     }
 
     render() {
@@ -90,12 +75,18 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
+let withRedirect = withAuthRedirect(UsersContainer)
+
+// export const UsersContainerAll =
+//     connect<MapStateToPropsType, mapDispatchToProps, OwnProps, AppStateType>(mapStateToProps,
+//         {
+//             followSuccess, unfollowSuccess,
+//             setCurrentPage,
+//             toggleFollowingProgress,getUsers})(withRedirect)
 
 export const UsersContainerAll =
-    connect<MapStateToPropsType, mapDispatchToProps, OwnProps, AppStateType>(mapStateToProps,
+    withAuthRedirect(connect<MapStateToPropsType, mapDispatchToProps, OwnProps, AppStateType>(mapStateToProps,
         {
             followSuccess, unfollowSuccess,
-            // setUsers,
             setCurrentPage,
-            // setTotalUsersCount, toggleIsFething,
-            toggleFollowingProgress,getUsers})(UsersContainer)
+            toggleFollowingProgress,getUsers})(UsersContainer))
