@@ -13,10 +13,10 @@ type PathParamsType = {
     userId: any
 }
 
-// type MapStatePropsType = {
-//     profile: ProfileType
-//     isAuth: boolean
-// }
+type MapStatePropsType = {
+    profile: ProfileType
+    // isAuth: boolean
+}
 let mapStateToPropsForRedirect = (state: RootStateType) => {
     return {
         isAuth: state.auth.isAuth
@@ -72,7 +72,5 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 
 let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
 
-
-
-
-export default connect(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent);
+export default withAuthRedirect(connect(mapStateToProps,
+    {getUserProfile})(WithUrlDataContainerComponent));
