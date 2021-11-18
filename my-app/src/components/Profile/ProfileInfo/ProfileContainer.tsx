@@ -31,7 +31,7 @@ let MapStatePropsType  = (state: RootStateType) => {
 
 
 type MapDispatchPropsType = {
-    getUserProfile: (profile: any) => void
+    getUserProfile: (profile: number) => void
 }
 
 type OwnPropsType = MapStatePropsType & MapDispatchPropsType
@@ -58,9 +58,9 @@ function ProfileContainer(props: PropsType) {
 // }
 let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
 
-let mapStateToPropsForRedirect = (state: AppStateType): MapStatePropsType => ({
-    isAuth: state.auth.isAuth
-})
+// let mapStateToPropsForRedirect = (state: AppStateType): MapStatePropsType => ({
+//     isAuth: state.auth.isAuth
+// })
 
 AuthRedirectComponent = connect (mapStateToPropsForRedirect)(AuthRedirectComponent)
 
