@@ -1,5 +1,6 @@
 import {MyPostsType} from "./store";
-import {profileAPI, usersAPI} from "../api/api";
+import {profileAPI, ProfileType, usersAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 
 let initialState: InitialStateType = {
@@ -20,14 +21,8 @@ export type InitialStateType = {
     newPostText: string
     profile: any
     status: string
-    updateStatus: string
 }
 
-export type ProfileType = {
-    profile: any
-    status: string
-    updateStatus: string
-}
 
 export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionsType): InitialStateType => {
     switch (action.type) {
@@ -72,29 +67,27 @@ export const addPostActionCreator = () => {
     return {type: 'ADD-POST'} as const
 }
 export const changeNewTextActionCreator = (newText: string) => {
-
     return {type: 'CHANGE-NEW-TEXT', newText: newText} as const
 }
 export const setStatus = (status: string) => {
-
     return {type: 'SET-STATUS', status: status} as const
 }
-export const setUserProfile = (profile: null) => ({type: 'SET-USER-PROFILE', profile} as const)
+export const setUserProfile = (profile: ProfileType) => ({type: 'SET-USER-PROFILE', profile} as const)
 
 
-export const getUserProfile = (userId: number) => (dispatch: any) => {
-    usersAPI.getProfile(userId)
+export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
+    profileAPI.getProfile(userId)
         .then(response => {
             dispatch(setUserProfile(response.data));
         })
 }
-export const getStatusProfile = (userId: number) => (dispatch: any) => {
+export const getStatus = (userId: number) => (dispatch: Dispatch) => {
     profileAPI.getStatus(userId)
         .then(response => {
             dispatch(setStatus(response.data));
         })
 }
-export const updateStatus = (status: string) => (dispatch: any) => {
+export const updateStatus = (status: string) => (dispatch: Dispatch) => {
     profileAPI.updateStatus(status)
         .then(response => {
             if (response.data.resultCode === 0)
@@ -104,10 +97,9 @@ export const updateStatus = (status: string) => (dispatch: any) => {
 
 type ChangeNewTextActionType = ReturnType<typeof changeNewTextActionCreator>
 type AddPostActionType = ReturnType<typeof addPostActionCreator>
-type setUserProfileType = ReturnType<typeof setUserProfile>
-type getUserProfileType = ReturnType<typeof getUserProfile>
-type setStatusType = ReturnType<typeof setStatus>
+type setUserProfileActionType = ReturnType<typeof setUserProfile>
+type setStatusActionType = ReturnType<typeof setStatus>
 
 export type ProfileActionsType = ChangeNewTextActionType |
-    AddPostActionType | setUserProfileType |
-    setStatusType | getUserProfileType
+    AddPostActionType | setUserProfileActionType |
+    setStatusActionType

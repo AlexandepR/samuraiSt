@@ -1,5 +1,5 @@
-import axios from "axios";
-import {UserType} from "../redux/users-reducer";
+import axios, { AxiosResponse } from "axios";
+import {UserType} from "../redux/users-reducer"
 
 type GetUsersType = {
     items: UserType[],
@@ -21,6 +21,16 @@ const instance = axios.create ( {
         'API-KEY': '5dcf0849-ab0d-483c-8d6a-fcf48b466bd1'
     }
 })
+
+
+export type ProfileType = {
+    userId: number;
+    fullName: string;
+    photos: {
+        small: string,
+        large: string
+    }
+}
 
 export const usersAPI = {
     getUsers(currentPage: number = 1, pageSize: number = 10) {
@@ -44,13 +54,13 @@ export const usersAPI = {
 
 export const profileAPI = {
     getProfile(userId: number) {
-        return instance.get(`profile/` + userId)
+        return instance.get<ProfileType>(`profile/` + userId)
     },
     getStatus(userId: number) {
         return instance.get('profile/status/' + userId);
     },
     updateStatus(status:string) {
-        return instance.put('profile/status', {status: status})
+        return instance.put<{ status: string }, AxiosResponse<{resultCode: number}>>('profile/status', {status: status})
     }
 }
 

@@ -3,11 +3,10 @@ import Profile from "../Profile";
 import {RouteComponentProps, withRouter} from "react-router";
 import {AppStateType} from "../../../redux/redux-store";
 import {connect} from 'react-redux';
-import {getUserProfile, ProfileType, updateStatus, setStatus} from "../../../redux/profile-reducer";
-import {Redirect} from "react-router-dom";
-import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {getUserProfile, updateStatus, getStatus} from "../../../redux/profile-reducer";
 import {RootStateType} from "../../../redux/store";
 import {compose} from "redux";
+import {ProfileType} from "../../../api/api";
 
 
 type PathParamsType = {
@@ -17,7 +16,6 @@ type PathParamsType = {
 type MapStatePropsType = {
     profile: ProfileType
     status: string
-    // updateStatus: string
     // isAuth: boolean
 }
 let mapStateToPropsForRedirect = (state: RootStateType) => {
@@ -30,6 +28,7 @@ let mapStateToPropsForRedirect = (state: RootStateType) => {
 type MapDispatchPropsType = {
     getUserProfile: (profile: number) => void
     getStatus: (status: string | number) => void
+    updateStatus:(status:string) => void
 }
 
 type OwnPropsType = MapStatePropsType & MapDispatchPropsType

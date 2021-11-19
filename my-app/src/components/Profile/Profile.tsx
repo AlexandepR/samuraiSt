@@ -2,10 +2,15 @@ import React from "react";
 import './Profile.module.css'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {ProfileType} from "../../redux/profile-reducer";
+import {ProfileType} from "../../api/api";
 
 
-const Profile = (props: ProfileType) => {
+type ProfileUserType = {
+    profile: ProfileType
+    status: string
+    updateStatus:(status:string) => void
+}
+const Profile = (props: ProfileUserType) => {
 
     return <div>
         <ProfileInfo
