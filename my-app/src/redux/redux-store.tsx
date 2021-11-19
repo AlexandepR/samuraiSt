@@ -3,15 +3,17 @@ import {profileReducer} from "./profile-reducer";
 import {dialogsReducer} from "./dialogs-reducer";
 import usersReducer from "./users-reducer";
 import authReducer from "./auth-reducer";
-import thunkMiddleware from 'redux-thunk'
-
+import thunkMiddleware from 'redux-thunk';
+import { reducer as formReducer } from 'redux-form';
+// import { Form, Field } from 'react-final-form';
 
 export const rootReducer = combineReducers({
     profilePostPage: profileReducer,
     dialogsPage: dialogsReducer,
     // sidebar: sidebarReducer,
     users: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
     // profile: profileReducer
 })
 
