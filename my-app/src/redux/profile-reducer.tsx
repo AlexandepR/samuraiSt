@@ -19,11 +19,14 @@ export type InitialStateType = {
     posts: Array<MyPostsType>
     newPostText: string
     profile: any
-    status: string | number
+    status: string
+    updateStatus: string
 }
 
 export type ProfileType = {
     profile: any
+    status: string
+    updateStatus: string
 }
 
 export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionsType): InitialStateType => {
@@ -66,28 +69,36 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
 }
 
 export const addPostActionCreator = () => {
-    return {type: 'ADD-POST'} as const}
+    return {type: 'ADD-POST'} as const
+}
 export const changeNewTextActionCreator = (newText: string) => {
-    return {type: 'CHANGE-NEW-TEXT', newText: newText} as const}
-export const setStatusAC = (status: string) => {
-    return{type: 'SET-STATUS', status: status}}
 
+    return {type: 'CHANGE-NEW-TEXT', newText: newText} as const
+}
+export const setStatus = (status: string) => {
+
+    return {type: 'SET-STATUS', status: status} as const
+}
 export const setUserProfile = (profile: null) => ({type: 'SET-USER-PROFILE', profile} as const)
+
+
 export const getUserProfile = (userId: number) => (dispatch: any) => {
-    usersAPI.getProfile(userId).then(response => {
-        dispatch(setUserProfile(response.data));
-    })
+    usersAPI.getProfile(userId)
+        .then(response => {
+            dispatch(setUserProfile(response.data));
+        })
 }
 export const getStatusProfile = (userId: number) => (dispatch: any) => {
-    profileAPI.getProfile(userId)
-        .then(response => {
-        dispatch(setStatus(response.data));
-    })
-}
-export const updateStatus = (status: string) => (dispatch: any) => {
-    profileAPI.getProfile(status)
+    profileAPI.getStatus(userId)
         .then(response => {
             dispatch(setStatus(response.data));
+        })
+}
+export const updateStatus = (status: string) => (dispatch: any) => {
+    profileAPI.updateStatus(status)
+        .then(response => {
+            if (response.data.resultCode === 0)
+                dispatch(setStatus(status));
         })
 }
 
@@ -95,5 +106,8 @@ type ChangeNewTextActionType = ReturnType<typeof changeNewTextActionCreator>
 type AddPostActionType = ReturnType<typeof addPostActionCreator>
 type setUserProfileType = ReturnType<typeof setUserProfile>
 type getUserProfileType = ReturnType<typeof getUserProfile>
+type setStatusType = ReturnType<typeof setStatus>
 
-export type ProfileActionsType = ChangeNewTextActionType | AddPostActionType | setUserProfileType
+export type ProfileActionsType = ChangeNewTextActionType |
+    AddPostActionType | setUserProfileType |
+    setStatusType | getUserProfileType
