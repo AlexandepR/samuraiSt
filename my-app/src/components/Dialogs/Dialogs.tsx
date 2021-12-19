@@ -9,7 +9,7 @@ import {Field, reduxForm} from "redux-form";
 
 type DialogsMessageType = {
     updateNewMessageBody: (text: string) => void
-    sendMessage: (text:string) => void
+    sendMessage: (text:string) => void              //text:string проверить
     dialogsPage: DialogsTextType
     isAuth: boolean
 }
@@ -21,15 +21,6 @@ const Dialogs = (props: DialogsMessageType) => {
     let messagesElements = state.messages.map(m => <Message message={m.message} key={m.id}/>);
     let newMessageBody = state.newMessageBody;
 
-    // const onSendMessageClick = () => {
-    //     props.sendMessage();
-    // }
-
-    const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        const body = e.currentTarget.value
-        props.updateNewMessageBody(body)
-
-    }
 
     let addNewMessage = (values:any) => {   // пофиксить типизацию
         props.sendMessage(values.newMessageBody);

@@ -8,19 +8,19 @@ import {AppStateType} from "../../../redux/redux-store";
 const mapStateToProps = (state: AppStateType) => {
     return {
         posts: state.profilePostPage.posts,
-        newPostText: state.profilePostPage.newPostText,
+        // newPostText: state.profilePostPage.newPostText,
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        addPost: () => {
-            dispatch(addPostActionCreator());
+        addPost: (newPostText:string) => {
+            dispatch(addPostActionCreator(newPostText));
         },
-        updateNewPostText: (text: string) => {
-            // dispatch({type: 'CHANGE-NEW-TEXT', newText: text})
-            dispatch(changeNewTextActionCreator(text))
-        }
+        // updateNewPostText: (text: string) => {
+        //     // dispatch({type: 'CHANGE-NEW-TEXT', newText: text})
+        //     dispatch(changeNewTextActionCreator(text))
+        // }
     }
 }
 

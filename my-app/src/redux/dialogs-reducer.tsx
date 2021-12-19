@@ -32,12 +32,12 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState,
                                action: NewMessageActionType): InitialStateDialogsType => {
 
     switch (action.type) {
-        case 'CHANGE-NEW-MESSAGE-TEXT' : {
-            return {
-                ...state,
-                newMessageBody: action.body
-            }
-        }
+        // case 'CHANGE-NEW-MESSAGE-TEXT' : {
+        //     return {
+        //         ...state,
+        //         newMessageBody: action.body
+        //     }
+        // }
         case 'SEND-MESSAGE' : {
             let newPost: MessagesType = {
                 id: new Date().getTime(),
@@ -46,7 +46,7 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState,
             };
             return {
                 ...state,
-                newMessageBody: '',
+                // newMessageBody: '',
                 messages: [...state.messages, newPost]
             }
         }
@@ -61,13 +61,14 @@ export const sendMessageActionCreator = (newMessageBody:string) => {
         newMessageBody
     } as const
 }
-export const updateNewMessageBodyActionCreator = (body: string) => {
-    return {
-        type: 'CHANGE-NEW-MESSAGE-TEXT',
-        body: body
-    } as const
-}
+// export const updateNewMessageBodyActionCreator = (body: string) => {
+//     return {
+//         type: 'CHANGE-NEW-MESSAGE-TEXT',
+//         body: body
+//     } as const
+// }
 
-export type NewMessageActionType = NewMessageType | AddNewMessageType
+// export type NewMessageActionType = NewMessageType | AddNewMessageType
+export type NewMessageActionType = NewMessageType
 type NewMessageType = ReturnType<typeof sendMessageActionCreator>
-type AddNewMessageType = ReturnType<typeof updateNewMessageBodyActionCreator>
+// type AddNewMessageType = ReturnType<typeof updateNewMessageBodyActionCreator>

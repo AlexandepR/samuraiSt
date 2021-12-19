@@ -10,7 +10,7 @@ let initialState: InitialStateType = {
         {id: 3, message: 'Blabla', likesCount: 11},
         {id: 4, message: 'Dada', likesCount: 11}
     ],
-    newPostText: '',
+    // newPostText: '',
     profile: null,
     status: '',
 }
@@ -18,7 +18,7 @@ let initialState: InitialStateType = {
 
 export type InitialStateType = {
     posts: Array<MyPostsType>
-    newPostText: string
+    // newPostText: string
     profile: any
     status: string
 }
@@ -29,7 +29,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
         case 'ADD-POST': {
             const newPost: MyPostsType = {
                 id: new Date().getTime(),
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             };
             let stateCopy = {
@@ -39,13 +39,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
             };
             return stateCopy
         }
-
-        case 'CHANGE-NEW-TEXT': {
-            return {
-                ...state,
-                newPostText: action.newText
-            }
-        }
+        // case 'CHANGE-NEW-TEXT': {
+        //     return {
+        //         ...state,
+        //         newPostText: action.newText
+        //     }
+        // }
         case 'SET-STATUS': {
             return {
                 ...state,
@@ -63,8 +62,8 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
     }
 }
 
-export const addPostActionCreator = () => {
-    return {type: 'ADD-POST'} as const
+export const addPostActionCreator = (newPostText:string) => {
+    return {type: 'ADD-POST', newPostText} as const
 }
 export const changeNewTextActionCreator = (newText: string) => {
     return {type: 'CHANGE-NEW-TEXT', newText: newText} as const
@@ -95,11 +94,14 @@ export const updateStatus = (status: string) => (dispatch: Dispatch) => {
         })
 }
 
-type ChangeNewTextActionType = ReturnType<typeof changeNewTextActionCreator>
+// type ChangeNewTextActionType = ReturnType<typeof changeNewTextActionCreator>
 type AddPostActionType = ReturnType<typeof addPostActionCreator>
 type setUserProfileActionType = ReturnType<typeof setUserProfile>
 type setStatusActionType = ReturnType<typeof setStatus>
 
-export type ProfileActionsType = ChangeNewTextActionType |
+// export type ProfileActionsType = ChangeNewTextActionType |
+//     AddPostActionType | setUserProfileActionType |
+//     setStatusActionType
+export type ProfileActionsType =
     AddPostActionType | setUserProfileActionType |
     setStatusActionType

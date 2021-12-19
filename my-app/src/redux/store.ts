@@ -1,5 +1,5 @@
 import {addPostActionCreator, changeNewTextActionCreator} from "./profile-reducer";
-import {updateNewMessageBodyActionCreator, sendMessageActionCreator} from "./dialogs-reducer";
+import {sendMessageActionCreator} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 
 
@@ -49,7 +49,6 @@ export type StoreType = {
 export type ActionsType =
     ReturnType<typeof addPostActionCreator> |
     ReturnType<typeof changeNewTextActionCreator> |
-    ReturnType<typeof updateNewMessageBodyActionCreator> |
     ReturnType<typeof sendMessageActionCreator>
 
 
