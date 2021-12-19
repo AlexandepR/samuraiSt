@@ -37,35 +37,28 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState,
                 ...state,
                 newMessageBody: action.body
             }
-            // let stateCopy = {...state}
-            // stateCopy.newMessageBody = action.body
-            // return stateCopy
-
         }
         case 'SEND-MESSAGE' : {
             let newPost: MessagesType = {
                 id: new Date().getTime(),
-                message: state.newMessageBody
+                // message: state.newMessageBody
+                message: action.newMessageBody
             };
             return {
                 ...state,
                 newMessageBody: '',
                 messages: [...state.messages, newPost]
             }
-            // let stateCopy = {...state};
-            // stateCopy.messages = [...state.messages];
-            // stateCopy.messages.push(newPost);
-            // stateCopy.newMessageBody = '';
-            // return stateCopy;
         }
         default:
             return state;
     }
 }
 
-export const sendMessageActionCreator = () => {
+export const sendMessageActionCreator = (newMessageBody:string) => {
     return {
         type: 'SEND-MESSAGE',
+        newMessageBody
     } as const
 }
 export const updateNewMessageBodyActionCreator = (body: string) => {
