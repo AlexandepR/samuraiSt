@@ -3,14 +3,31 @@ import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {MyPostsType} from '../../../redux/store'
 import {Field, reduxForm} from "redux-form";
+import {maxLengthCreator, required} from "../../../utils/validators/validators";
+import {Textarea} from "../../common/FormsControls/FormsControls";
 
 
 type MyPostType = {
-    // newPostText: string
-    // updateNewPostText: (text: string) => void
     addPost: (text:string) => void         //text:string проверить
     posts: Array<MyPostsType>
 }
+
+const maxLength10 = maxLengthCreator(10)
+
+let AddNewPostForm = (props:any) => {         // пофиксить типизацию
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field name='newPostText' component={Textarea} placeholder={'Post message'}
+                       validate={[required, maxLength10(10)]}/>
+            </div>
+            <div>
+                <button>Add post</button>
+            </div>
+        </form>
+    )
+}
+let AddNewPostFormRedux = reduxForm({form: 'ProfileAddNewPostForm'}) (AddNewPostForm)
 
 
 const MyPosts = (props: MyPostType) => {
@@ -36,18 +53,6 @@ const MyPosts = (props: MyPostType) => {
 }
 
 
-let AddNewPostForm = (props:any) => {         // пофиксить типизацию
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field name='newPostText' component='textarea' />
-            </div>
-            <div>
-                <button>Add post</button>
-            </div>
-        </form>
-    )
-}
-let AddNewPostFormRedux = reduxForm({form: 'ProfileAddNewPostForm'}) (AddNewPostForm)
+
 
 export default MyPosts;
