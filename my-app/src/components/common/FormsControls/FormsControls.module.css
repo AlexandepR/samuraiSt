@@ -12,8 +12,8 @@
 /*.error {*/
 /*    border: solid red 2px;*/
 /*}*/
-.form-summary-error {
+.formSummaryError {
     border: red 1px solid;
     padding: 5px;
-    color: rosybrown;
+    color: red;
 }

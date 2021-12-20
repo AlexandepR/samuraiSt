@@ -16,7 +16,8 @@ type PathParamsType = {
 type MapStatePropsType = {
     profile: ProfileType
     status: string
-    // isAuth: boolean
+    authorizedUserId: string | number | null
+    isAuth: boolean
 }
 let mapStateToPropsForRedirect = (state: RootStateType) => {
     return {
@@ -38,7 +39,7 @@ function ProfileContainer(props: PropsType) {
     useEffect(() => {
         let userId = props.match.params.userId
         if (!userId) {
-            userId = 2;
+            userId = props.authorizedUserId;
         }
         props.getUserProfile(userId)
         props.getStatus(userId)
@@ -47,6 +48,7 @@ function ProfileContainer(props: PropsType) {
 
     return (
         <Profile
+            {...props}
             // props={props}
             profile={props.profile}
             status={props.status}
@@ -57,7 +59,10 @@ function ProfileContainer(props: PropsType) {
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profilePostPage.profile,
-    status: state.profilePostPage.status
+    status: state.profilePostPage.status,
+    authorizedUserId: state.auth.id,
+    isAuth: state.auth.isAuth
+
 })
 
 export default compose<React.ComponentType>(
