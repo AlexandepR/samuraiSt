@@ -57,19 +57,31 @@ export const profileAPI = {
         return instance.get<ProfileType>(`profile/` + userId)
     },
     getStatus(userId: number) {
-        return instance.get('profile/status/' + userId);
+        return instance.get('profile/status/' + userId)
     },
     updateStatus(status:string) {
         return instance.put<{ status: string }, AxiosResponse<{resultCode: number}>>('profile/status', {status: status})
     }
 }
 
+// type LoginType = {
+//     resultCode: number | string
+//     data: any
+// }
+
+
 export const authAPI = {
     me() {
-        return instance.get<AuthMeType>(`auth/me`, {
-            withCredentials: true
+        return instance.get(`auth/me`, {
+            // withCredentials: true
         })
-    }
+    },
+     login(email:string | number, password:string | number, rememberMe: boolean = false, captcha: string) {
+        return instance.post(`auth/login`, { email, password, rememberMe,captcha })
+     },
+    logout() {
+        return instance.delete(`auth/login`)
+    },
 }
 
 

@@ -2,6 +2,10 @@ import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../common/FormsControls/FormsControls";
 import {required} from "../../utils/validators/validators";
+import {connect} from "react-redux";
+import {initialState, InitialStateType, login} from "../../redux/auth-reducer";
+import {Redirect} from "react-router-dom";
+import {AppStateType} from "../../redux/redux-store";
 
 
 
@@ -9,19 +13,21 @@ type FormDataType = {
     login: string
     password: string
     rememberMe: boolean
+    email: string | number
 }
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props: any) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder={'Login'}
+                <Field placeholder={'Email'}
                        validate={[required]}
-                       name={'login'}
+                       name={'email'}
                        component={Input}/>
             </div>
             <div>
                 <Field placeholder={'Password'}
+                       type={'password'}
                        validate={[required]}
                        name={'password'}
                        component={Input}/>
@@ -40,7 +46,11 @@ const LoginReduxForm = reduxForm<FormDataType> ({form: 'login'}) (LoginForm)
 
 function Login(props: any) {
     const onSubmit = (formData: FormDataType) => {
-        console.log(formData)
+        props.login(formData.email, formData.password, formData.rememberMe)
+    }
+
+    if (props.isAuth) {
+        return <Redirect to={'/profile'} />
     }
 
     return <div>
@@ -49,8 +59,15 @@ function Login(props: any) {
     </div>
 }
 
-export default Login;
+type MapStatePropsType = {
+    isAuth: boolean
+}
 
+const mapStateToProps = (state: any):MapStatePropsType => ({       //типизировать AppStateType
+    isAuth: state.auth.isAuth
+})
+// export default connect( {login}) (Login);
+export default connect(mapStateToProps, {login}) (Login);
 
 
 
