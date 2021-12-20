@@ -19,7 +19,7 @@ let AddNewPostForm = (props:any) => {         // пофиксить типиза
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field name='newPostText' component={Textarea} placeholder={'Post message'}
-                       validate={[required, maxLength10(10)]}/>
+                       validate={[required, maxLength10]}/>
             </div>
             <div>
                 <button>Add post</button>
