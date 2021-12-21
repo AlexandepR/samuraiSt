@@ -12,30 +12,33 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginPage from "./components/Login/login";
 
 
-
-
-const App: React.FC= () => {
-    return (
-        <BrowserRouter>
-            <div className='App'>
-                <HeaderContainer />
-                <Navbar/>
-                <div className='app-wrapper-content'>
-                    <Route path='/dialogs'
-                           render ={ () => <DialogsContainer /> } />
-                    <Route path='/profile/:userId?'
-                           render={ () => <ProfileContainer /> } />
-                    <Route path='/users'
-                           render={ () => <UsersContainerAll /> } />
-                    <Route path='/login'
-                           render={() => <LoginPage />}/>
-                    <Route path='/news' component={News}/>
-                    <Route path='/music' component={Music}/>
-                    <Route path='/settings' component={Settings}/>
+class App extends React.Component {
+    componentDidMount() {
+        this.props.getAuthUserData();
+    }
+    render() {
+        return (
+            <BrowserRouter>
+                <div className='App'>
+                    <HeaderContainer/>
+                    <Navbar/>
+                    <div className='app-wrapper-content'>
+                        <Route path='/dialogs'
+                               render={() => <DialogsContainer/>}/>
+                        <Route path='/profile/:userId?'
+                               render={() => <ProfileContainer/>}/>
+                        <Route path='/users'
+                               render={() => <UsersContainerAll/>}/>
+                        <Route path='/login'
+                               render={() => <LoginPage/>}/>
+                        <Route path='/news' component={News}/>
+                        <Route path='/music' component={Music}/>
+                        <Route path='/settings' component={Settings}/>
+                    </div>
                 </div>
-            </div>
-        </BrowserRouter>
-    )
+            </BrowserRouter>
+        )
+    }
 }
 
 // type MessageType = {
