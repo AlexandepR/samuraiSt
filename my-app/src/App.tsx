@@ -11,21 +11,21 @@ import ProfileContainer from "./components/Profile/ProfileInfo/ProfileContainer"
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginPage from "./components/Login/login";
 import {connect} from "react-redux";
-import {getAuthUserData} from "./redux/auth-reducer";
 import {compose} from "redux";
 import {withRouter} from "react-router";
+import {initializeApp} from "./redux/app-reducer";
 
-interface IRecipeProps {
-    getAuthUserData: () => void
-}
+// interface IRecipeProps {
+//
+// }
+//
+// interface IRecipeState {
+// }
 
-interface IRecipeState {
-}
-
-class App extends React.Component<IRecipeProps, IRecipeState> {
-// class App extends React.Component {
+// class App extends React.Component<IRecipeProps, IRecipeState> {
+class App extends React.Component {
     componentDidMount() {
-        this.props.getAuthUserData();
+        this.props.initializeApp();
     }
     render() {
         return (
@@ -54,72 +54,8 @@ class App extends React.Component<IRecipeProps, IRecipeState> {
 
 export default compose (
     withRouter,
-    connect(null, {getAuthUserData}))(App);
-
-
-// type MessageType = {
-//     message: string
-// }
-
-// function HelloMessage(props: MessageType) {
-//
-//     let postMessageRef = React.createRef();
-//
-//     const addPost = () => {
-//
-//     }
-//     return <div>
-//         {props.message}
-//         <textarea ref={post}></textarea>
-//         <button onClick={addPost}>add post</button>
-//     </div>
-// }
+    connect(null, {initializeApp}))(App);
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// type AppPropsType = {
-//     state: StateType
-// }
-//
-// const App: React.FC <AppPropsType> = (props) => {
-//
-//     return (
-//         <BrowserRouter>
-//             <div className='app-wrapper'>
-//                 <Header/>
-//                 <Navbar/>
-//                 <div className='app-wrapper-content'>
-//                     <Route path='/dialogs'
-//                            render ={ () => <Dialogs
-//                                dialogs={props.state.dialogsPage.dialogs}
-//                                messages={props.state.messagePage.messages}/> } />
-//                     <Route path='/profile'
-//                            render={ () => <Profile
-//                                state={props.state} /> } />
-//
-//                     <Route path='/news' component={News}/>
-//                     <Route path='/music' component={Music}/>
-//                     <Route path='/settings' component={Settings}/>
-//                 </div>
-//             </div>
-//         </BrowserRouter>
-//     )
-// }
-//
-//
-// export default App;
