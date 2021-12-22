@@ -10,9 +10,20 @@ import UsersContainerAll from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileInfo/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginPage from "./components/Login/login";
+import {connect} from "react-redux";
+import {getAuthUserData} from "./redux/auth-reducer";
+import {compose} from "redux";
+import {withRouter} from "react-router";
 
+interface IRecipeProps {
+    getAuthUserData: () => void
+}
 
-class App extends React.Component {
+interface IRecipeState {
+}
+
+class App extends React.Component<IRecipeProps, IRecipeState> {
+// class App extends React.Component {
     componentDidMount() {
         this.props.getAuthUserData();
     }
@@ -41,6 +52,11 @@ class App extends React.Component {
     }
 }
 
+export default compose (
+    withRouter,
+    connect(null, {getAuthUserData}))(App);
+
+
 // type MessageType = {
 //     message: string
 // }
@@ -59,7 +75,6 @@ class App extends React.Component {
 //     </div>
 // }
 
-export default App;
 
 
 
