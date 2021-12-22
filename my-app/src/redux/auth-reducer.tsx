@@ -37,7 +37,7 @@ export const setAuthUserDataAc = (id: number | string | null, email: string | nu
     {type: 'SET-USER-DATA', payload: {id, email, login, isAuth}} as const)
 
 export const getAuthUserData = () => (dispatch: any) => {                    //типизировать
-    authAPI.me()
+    return authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0 || 10) {
                 let {id, email, login} = response.data.data;

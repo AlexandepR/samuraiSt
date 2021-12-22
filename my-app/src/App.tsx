@@ -14,20 +14,27 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {withRouter} from "react-router";
 import {initializeApp} from "./redux/app-reducer";
+import {AppStateType} from "./redux/redux-store";
+import Preloader from "./components/common/Preloader/Preloader";
 
-// interface IRecipeProps {
-//
-// }
-//
-// interface IRecipeState {
-// }
+interface IRecipeProps {
+    initialized: boolean
+    // initializeApp: () => void
+    // initializeApp: Dispatch<TodoAction>
+}
 
-// class App extends React.Component<IRecipeProps, IRecipeState> {
-class App extends React.Component {
+interface IRecipeState {
+}
+
+class App extends React.Component<IRecipeProps, IRecipeState> {
+// class App extends React.Component {
     componentDidMount() {
         this.props.initializeApp();
     }
     render() {
+        if (!this.props.initialized){
+            return <Preloader/>
+        }
         return (
             <BrowserRouter>
                 <div className='App'>
@@ -52,9 +59,13 @@ class App extends React.Component {
     }
 }
 
+const mapStateToProps = (state:AppStateType) => ({
+    inialized: state.app.initialized
+})
+
 export default compose (
     withRouter,
-    connect(null, {initializeApp}))(App);
+    connect(mapStateToProps, {initializeApp}))(App);
 
 
 

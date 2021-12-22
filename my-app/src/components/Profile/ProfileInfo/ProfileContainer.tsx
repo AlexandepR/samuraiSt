@@ -1,4 +1,4 @@
-import React, {ComponentType, useEffect} from "react";
+import React, {useEffect} from "react";
 import Profile from "../Profile";
 import {RouteComponentProps, withRouter} from "react-router";
 import {AppStateType} from "../../../redux/redux-store";
@@ -19,11 +19,11 @@ type MapStatePropsType = {
     authorizedUserId: string | number | null
     isAuth: boolean
 }
-let mapStateToPropsForRedirect = (state: RootStateType) => {
-    return {
-        isAuth: state.auth.isAuth
-    }
-}
+// let mapStateToPropsForRedirect = (state: RootStateType) => {
+//     return {
+//         isAuth: state.auth.isAuth
+//     }
+// }
 
 
 type MapDispatchPropsType = {
@@ -40,6 +40,9 @@ function ProfileContainer(props: PropsType) {
         let userId = props.match.params.userId
         if (!userId) {
             userId = props.authorizedUserId;
+            if(!userId) {
+                props.history.push('/login')
+            }
         }
         props.getUserProfile(userId)
         props.getStatus(userId)
