@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import {UserType} from "../redux/users-reducer"
+import {requestUsers, UserType} from "../redux/users-reducer"
 
 type GetUsersType = {
     items: UserType[],
@@ -31,9 +31,8 @@ export type ProfileType = {
         large: string
     }
 }
-
 export const usersAPI = {
-    getUsers(currentPage: number = 1, pageSize: number = 10) {
+    requestUsers(currentPage: number = 1, pageSize: number = 10) {
         return instance.get<GetUsersType>(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => {
                 return response.data;
