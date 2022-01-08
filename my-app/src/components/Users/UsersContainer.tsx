@@ -23,7 +23,7 @@ import {
 type OwnProps = {}
 
 type MapStateToPropsType = {
-    usersPage: InitialStateType,
+    users: InitialStateType,
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
@@ -31,7 +31,8 @@ type MapStateToPropsType = {
     followingInProgress: Array<number>
 }
 // type MapStateToPropsType = {
-//     usersPage: (state: AppStateType) => void,
+//     // usersPage: (state: AppStateType) => void,
+//     users: any,
 //     pageSize: (state: AppStateType) => void,
 //     totalUsersCount: (state: AppStateType) => void,
 //     currentPage: (state: AppStateType) => void,
@@ -50,11 +51,11 @@ type mapDispatchToProps = {
 class UsersContainer extends React.Component<any, any> {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize);
+        this.props.requestUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.getUsers(pageNumber, this.props.pageSize)
+        this.props.requestUsers(pageNumber, this.props.pageSize)
     }
 
     render() {
@@ -64,7 +65,7 @@ class UsersContainer extends React.Component<any, any> {
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
-                   users={this.props.usersPage.users}
+                   users={this.props.users.users}
                    follow={this.props.followSuccess}
                    unfollow={this.props.unfollowSuccess}
                    followingInProgress={this.props.followingInProgress}
@@ -86,7 +87,7 @@ class UsersContainer extends React.Component<any, any> {
 // }
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        usersPage: getUsers(state),
+        users: getUsers(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
