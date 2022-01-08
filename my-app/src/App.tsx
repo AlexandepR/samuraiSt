@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component, ComponentType} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {BrowserRouter, Route} from "react-router-dom";
@@ -17,17 +17,12 @@ import {initializeApp} from "./redux/app-reducer";
 import {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 
-interface IRecipeProps {
-    initialized: boolean
-    // initializeApp: () => void
-    // initializeApp: Dispatch<TodoAction>
-}
+type IRecipeProps = mapStateToPropsType & mapDispatchToPropsType
 
-interface IRecipeState {
+type IRecipeState = {
 }
 
 class App extends React.Component<IRecipeProps, IRecipeState> {
-// class App extends React.Component {
     componentDidMount() {
         this.props.initializeApp();
     }
@@ -59,13 +54,23 @@ class App extends React.Component<IRecipeProps, IRecipeState> {
     }
 }
 
-const mapStateToProps = (state:AppStateType) => ({
-    inialized: state.app.initialized
+type mapStateToPropsType = {
+    initialized: boolean
+}
+type mapDispatchToPropsType = {
+    initializeApp: () => void
+}
+
+
+const mapStateToProps = (state:AppStateType):mapStateToPropsType => ({
+    initialized: state.app.initialized
 })
 
-export default compose (
+
+
+export default compose<ComponentType> (
     withRouter,
-    connect(mapStateToProps, {initializeApp}))(App);
+    connect<mapStateToPropsType, mapDispatchToPropsType,{},AppStateType>(mapStateToProps, {initializeApp}))(App);
 
 
 
